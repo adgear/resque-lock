@@ -53,7 +53,7 @@ module Resque
       # passed the same arguments as `perform`, that is, your job's
       # payload.
       def lock(*args)
-        "lock:#{name}-#{encode(*args)}"
+        "lock:#{name}-#{Resque.encode(args)}"
       end
 
       # See the documentation for SETNX http://redis.io/commands/setnx for an
