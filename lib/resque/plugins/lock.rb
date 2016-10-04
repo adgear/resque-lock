@@ -53,13 +53,14 @@ module Resque
       # passed the same arguments as `perform`, that is, your job's
       # payload.
       def lock(*args)
-        "lock:#{name}-#{encode(*args)}"
+        "lock:#{name}-#{args.to_s}"
       end
 
       # See the documentation for SETNX http://redis.io/commands/setnx for an
       # explanation of this deadlock free locking pattern
       def before_enqueue_lock(*args)
-        key = lock(*args)
+        normalized_args = Resque.decode(Resque.encode(args))
+        key = lock(*normalized_args)
         now = Time.now.to_i
         timeout = now + lock_timeout + 1
 
