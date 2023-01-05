@@ -32,6 +32,7 @@ class LockTest < Test::Unit::TestCase
   def test_version
     version = Object.const_defined?('Resque::Version') ? Resque::Version : Resque::VERSION
     major, minor, _patch = version.split('.')
+    refute_equal(0, major.to_i)
     assert(minor.to_i >= 17) if major.to_i == 1
     assert Resque::Plugin.respond_to?(:before_enqueue_hooks)
   end
