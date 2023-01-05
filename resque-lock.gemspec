@@ -26,4 +26,6 @@ For example:
       end
     end
 desc
+
+  s.add_development_dependency 'rubocop', '~> 1.41.1'
 end
