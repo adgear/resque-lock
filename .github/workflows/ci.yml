@@ -6,7 +6,9 @@ on:
 jobs:
   test:
     name: tests / ruby
-    runs-on: ubuntu-latest
+    runs-on: 
+      group: SelfHostedDefault
+      labels: ubuntu-22.04-small
 
     services:
       redis:
@@ -22,11 +24,11 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['2.6.10', '3.0']
+        ruby-version: ['2.7.8', '3.0']
     steps:
       - uses: actions/checkout@v3
       - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@v1.133.0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
@@ -37,15 +39,17 @@ jobs:
         run: bundle exec rake
   rubocop:
     name: linters / rubocop
-    runs-on: ubuntu-latest
+    runs-on: 
+      group: SelfHostedDefault
+      labels: ubuntu-22.04-small
     env:
-      RUBY_VERSION: 2.6.10
+      RUBY_VERSION: 2.7.8
     steps:
       - name: Codebase Checkout
         uses: actions/checkout@v3
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.133.0
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
