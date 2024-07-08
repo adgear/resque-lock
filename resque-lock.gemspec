@@ -28,5 +28,4 @@ For example:
 desc
 
   s.add_development_dependency 'rubocop', '~> 1.41.1'
-  s.add_development_dependency 'rubocop-ast', '~> 1.30.0'
 end

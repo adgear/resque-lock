@@ -22,11 +22,11 @@ jobs:
 
     strategy:
       matrix:
-        ruby-version: ['2.6.10', '3.0']
+        ruby-version: ['2.7.7', '3.0']
     steps:
       - uses: actions/checkout@v3
       - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.133.0
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
@@ -39,22 +39,17 @@ jobs:
     name: linters / rubocop
     runs-on: ubuntu-latest
     env:
-      RUBY_VERSION: 2.6.10
+      RUBY_VERSION: 2.7.7
     steps:
       - name: Codebase Checkout
         uses: actions/checkout@v3
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.133.0
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
           bundler-cache: true
           cache-version: 1
 
       - name: rubocop
-        uses: reviewdog/action-rubocop@v2.3.0
-        with:
-          rubocop_version: gemfile
-          rubocop_extensions: rubocop-performance rubocop-rake rubocop-i18n
-          reporter: github-check
-          fail_on_error: true
+        run: bundle exec rubocop
