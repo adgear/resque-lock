@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Resque
   module Plugins
     # If you want only one instance of your job queued at a time,
@@ -41,7 +43,6 @@ module Resque
     # repo_id. Normally a job is locked using a combination of its
     # class name and arguments.
     module Lock
-
       # Override in your job to control the lock experiation time. This is the
       # time in seconds that the lock should be considered valid. The default
       # is one hour (3600 seconds).
@@ -53,7 +54,7 @@ module Resque
       # passed the same arguments as `perform`, that is, your job's
       # payload.
       def lock(*args)
-        "lock:#{name}-#{args.to_s}"
+        "lock:#{name}-#{args}"
       end
 
       # See the documentation for SETNX http://redis.io/commands/setnx for an
@@ -77,15 +78,12 @@ module Resque
       end
 
       def around_perform_lock(*args)
-        begin
-          yield
-        ensure
-          # Always clear the lock when we're done, even if there is an
-          # error.
-          Resque.redis.del(lock(*args))
-        end
+        yield
+      ensure
+        # Always clear the lock when we're done, even if there is an
+        # error.
+        Resque.redis.del(lock(*args))
       end
     end
   end
 end
-

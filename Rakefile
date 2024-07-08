@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rake/testtask'
 require 'rdoc/task'
 
@@ -9,7 +11,7 @@ end
 # Tests
 #
 
-task :default => :test
+task default: :test
 
 Rake::TestTask.new do |t|
   t.libs << 'lib'
