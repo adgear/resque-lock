@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'test-unit'
 require 'resque'
 require 'resque/plugins/lock'
 
-$counter = 0
+$counter = 0 # rubocop:disable Style/GlobalVars
 
 class LockTest < Test::Unit::TestCase
   class Job
@@ -43,14 +45,14 @@ class LockTest < Test::Unit::TestCase
     assert_equal 1, Resque.redis.llen('queue:lock_test')
   end
 
-  def test_deadlock
+  def test_deadlock # rubocop:disable Metrics/AbcSize
     now = Time.now.to_i
 
-    Resque.redis.set(Job.lock, now+60)
+    Resque.redis.set(Job.lock, now + 60)
     Resque.enqueue(Job)
     assert_equal 0, Resque.redis.llen('queue:lock_test')
 
-    Resque.redis.set(Job.lock, now-1)
+    Resque.redis.set(Job.lock, now - 1)
     Resque.enqueue(Job)
     assert_equal 1, Resque.redis.llen('queue:lock_test')
 

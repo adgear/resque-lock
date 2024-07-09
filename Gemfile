@@ -4,9 +4,9 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem "resque"
+gem 'resque'
 
 group :development do
-  gem "rake"
-  gem "test-unit"
+  gem 'rake'
+  gem 'test-unit'
 end
