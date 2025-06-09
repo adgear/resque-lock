@@ -6,7 +6,9 @@ on:
 jobs:
   test:
     name: tests / ruby
-    runs-on: ubuntu-latest
+    runs-on:
+      group: SelfHostedDefault
+      labels: ubuntu-22.04-small
 
     services:
       redis:
