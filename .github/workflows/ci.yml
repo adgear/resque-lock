@@ -39,7 +39,9 @@ jobs:
         run: bundle exec rake
   rubocop:
     name: linters / rubocop
-    runs-on: ubuntu-latest
+    runs-on:
+      group: SelfHostedDefault
+      labels: ubuntu-22.04-small
     env:
       RUBY_VERSION: 2.7.7
     steps:
