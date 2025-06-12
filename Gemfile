@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'rack', '>= 2.2.13'
 gem 'resque'
 
 group :development do
